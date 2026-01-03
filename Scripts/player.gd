@@ -14,7 +14,6 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor():
 		
 		var ground = ground_scanner.get_collider()
-		ground.get
 		# Handle jump.
 		if Input.is_action_pressed("jump") and is_on_floor():
 			velocity.y = JUMP_VELOCITY

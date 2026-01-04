@@ -14,8 +14,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_sasra"]
-radius = 30.016663
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
+size = Vector2(59, 86)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -23,13 +23,13 @@ script = ExtResource("1_cvnsp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(1, 0.44313726, 1, 1)
+z_index = 1
 position = Vector2(0, 1)
 scale = Vector2(0.46923077, 0.6769231)
 sprite_frames = SubResource("SpriteFrames_ia1lp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 15)
-shape = SubResource("CircleShape2D_sasra")
+shape = SubResource("RectangleShape2D_cvnsp")
 
 [node name="GroundScanner" type="RayCast2D" parent="."]
 target_position = Vector2(0, 45)

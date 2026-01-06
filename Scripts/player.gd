@@ -20,11 +20,21 @@ func get_friction() -> float:
 		return AIR_FRICTION
 
 func clamp_accel(linear_velocity:float, accel:float, max_velocity:float) -> float:
-	return clamp(linear_velocity+accel,-max_velocity,max_velocity) - linear_velocity
+	if accel>0:
+		if linear_velocity>max_velocity:
+			return 0
+		return min(linear_velocity+accel,max_velocity) - linear_velocity
+	else:
+		if linear_velocity<-max_velocity:
+			return 0
+		return max(linear_velocity+accel,-max_velocity) - linear_velocity
+		
 
 var face = 1
 var djc = 0
 var maxdj = 2
+var ujc = 0
+var maxuj = 1
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("key_left", "key_right")
 	if direction:
@@ -42,6 +52,7 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if is_on_floor():
 		djc=0
+		ujc=0
 		# Handle jump.
 		if Input.is_action_pressed("jump"):
 			velocity.y = JUMP_VELOCITY
@@ -59,16 +70,20 @@ func _physics_process(delta: float) -> void:
 		
 	
 	else:
-		var dj_speed=SPEED+300
-		var dj_acc=SPEED+300
-		var dj_up_speed=SPEED+300
-		var dj_up_acc=SPEED+300
+		
+		
 		if djc<maxdj and Input.is_action_just_pressed("jump"):
 			djc+=1
-			if abs(velocity.x) < SPEED + 500:
+			if ujc<maxuj and Input.is_action_pressed("key_up"):
+				ujc +=1
+				velocity.y += clamp_accel(velocity.y, -1200, 1200)
+			else:
+				var dj_speed=SPEED+500
+				var dj_acc=SPEED+500
+				var dj_up_speed=500
+				var dj_up_acc=500
 				velocity.x += clamp_accel(velocity.x, dj_acc*face, dj_speed)
-			if abs(velocity.y) < SPEED + 200:
-				velocity.y -= 200
+				velocity.y += clamp_accel(velocity.y, -dj_up_acc, dj_up_speed)
 		velocity += GRAVITY * delta * Vector2.DOWN
 	print(velocity.x)
 	move_and_slide()

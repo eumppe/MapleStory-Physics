@@ -13,7 +13,8 @@ const GRAVITY = 2100
 const GROUND_FRICTION : float = 0.9
 const AIR_FRICTION : float = 0.05
 
-@onready var ground_scanner: RayCast2D = $GroundScanner
+@onready var ground_scanner: ShapeCast2D = $GroundScanner
+
 
 func get_friction() -> float:
 	if is_on_floor():
@@ -80,7 +81,7 @@ func _physics_process(delta: float) -> void:
 		# Handle jump.
 		if Input.is_action_pressed("jump"):
 			if Input.is_action_pressed("key_down"):
-				var ground = ground_scanner.get_collider()
+				var ground = ground_scanner.get_collider(0)
 				ground.ground_jump()
 				down_jump_ended.connect(ground.revert_mask)
 			else:

@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal down_jump_ended
+
 #TODO
 const SPEED = 300.0
 const FRICTION_POW = 200.0
@@ -35,15 +37,22 @@ func air_jump():
 	var dj_up_speed=500
 	var dj_up_acc=500
 	if air_jump_count<max_air_jump:
+		end_down_jump()
 		air_jump_count+=1
 		velocity.x += clamp_accel(velocity.x, dj_acc*face, dj_speed)
 		velocity.y += clamp_accel(velocity.y, -dj_up_acc, dj_up_speed)
 	
 func up_jump():
-	if air_jump_count<max_air_jump and up_jump_count<max_up_jump:
+	if air_jump_count < max_air_jump and up_jump_count < max_up_jump:
+		end_down_jump()
 		air_jump_count+=1
 		up_jump_count +=1
 		velocity.y += clamp_accel(velocity.y, -1200, 1200)
+		
+func end_down_jump():
+	down_jump_ended.emit()
+	for dict in down_jump_ended.get_connections():
+		down_jump_ended.disconnect(dict.callable)
 
 var face = 1
 var air_jump_count = 0
@@ -64,13 +73,16 @@ func _physics_process(delta: float) -> void:
 	
 	# Add the gravity.
 	if is_on_floor():
+		end_down_jump()
+		
 		air_jump_count=0
 		up_jump_count=0
 		# Handle jump.
 		if Input.is_action_pressed("jump"):
 			if Input.is_action_pressed("key_down"):
-				# ground_scanner.get_collider().
-				pass
+				var ground = ground_scanner.get_collider()
+				ground.ground_jump()
+				down_jump_ended.connect(ground.revert_mask)
 			else:
 				velocity.y += JUMP_VELOCITY
 				

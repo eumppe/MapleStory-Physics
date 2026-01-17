@@ -29,18 +29,31 @@ func clamp_accel(linear_velocity:float, accel:float, max_velocity:float) -> floa
 			return 0
 		return max(linear_velocity+accel,-max_velocity) - linear_velocity
 		
+func air_jump():
+	var dj_speed=SPEED+500
+	var dj_acc=SPEED+500
+	var dj_up_speed=500
+	var dj_up_acc=500
+	if air_jump_count<max_air_jump:
+		air_jump_count+=1
+		velocity.x += clamp_accel(velocity.x, dj_acc*face, dj_speed)
+		velocity.y += clamp_accel(velocity.y, -dj_up_acc, dj_up_speed)
+	
+func up_jump():
+	if air_jump_count<max_air_jump and up_jump_count<max_up_jump:
+		air_jump_count+=1
+		up_jump_count +=1
+		velocity.y += clamp_accel(velocity.y, -1200, 1200)
 
 var face = 1
-var djc = 0
-var maxdj = 2
-var ujc = 0
-var maxuj = 1
+var air_jump_count = 0
+var max_air_jump = 2
+var up_jump_count = 0
+var max_up_jump = 1
 func _physics_process(delta: float) -> void:
 	var direction := Input.get_axis("key_left", "key_right")
 	if direction:
 			face = direction
-	
-	if direction:
 			velocity.x += clamp_accel(velocity.x, direction * MOVE_ACCEL * get_friction() * delta, SPEED) 
 	else:
 		if abs(velocity.x)>0:
@@ -51,14 +64,19 @@ func _physics_process(delta: float) -> void:
 	
 	# Add the gravity.
 	if is_on_floor():
-		djc=0
-		ujc=0
+		air_jump_count=0
+		up_jump_count=0
 		# Handle jump.
 		if Input.is_action_pressed("jump"):
-			velocity.y = JUMP_VELOCITY
-			if direction:
-				if sign(velocity.x)!=sign(direction):
-					velocity.x += direction * SPEED * get_friction()
+			if Input.is_action_pressed("key_down"):
+				# ground_scanner.get_collider().
+				pass
+			else:
+				velocity.y += JUMP_VELOCITY
+				
+				if direction:
+					if sign(velocity.x)!=sign(direction):
+						velocity.x += direction * SPEED * get_friction()
 
 		# Default Friction
 		
@@ -72,18 +90,10 @@ func _physics_process(delta: float) -> void:
 	else:
 		
 		
-		if djc<maxdj and Input.is_action_just_pressed("jump"):
-			djc+=1
-			if ujc<maxuj and Input.is_action_pressed("key_up"):
-				ujc +=1
-				velocity.y += clamp_accel(velocity.y, -1200, 1200)
+		if Input.is_action_just_pressed("jump"):
+			if Input.is_action_pressed("key_up"):
+				up_jump()
 			else:
-				var dj_speed=SPEED+500
-				var dj_acc=SPEED+500
-				var dj_up_speed=500
-				var dj_up_acc=500
-				velocity.x += clamp_accel(velocity.x, dj_acc*face, dj_speed)
-				velocity.y += clamp_accel(velocity.y, -dj_up_acc, dj_up_speed)
+				air_jump()
 		velocity += GRAVITY * delta * Vector2.DOWN
-	print(velocity.x)
 	move_and_slide()

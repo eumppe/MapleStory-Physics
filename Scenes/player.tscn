@@ -18,6 +18,7 @@ animations = [{
 size = Vector2(46, 89)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6t5aa"]
+size = Vector2(20, 0.1)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -37,6 +38,8 @@ shape = SubResource("RectangleShape2D_cvnsp")
 
 [node name="GroundScanner" type="ShapeCast2D" parent="."]
 z_index = 2
+position = Vector2(0, 44)
 scale = Vector2(2.31, 2.31)
 shape = SubResource("RectangleShape2D_6t5aa")
-target_position = Vector2(0, 9.956711)
+target_position = Vector2(0, 0.43289948)
+max_results = 1

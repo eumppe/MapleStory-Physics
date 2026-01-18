@@ -82,8 +82,10 @@ func _physics_process(delta: float) -> void:
 		if Input.is_action_pressed("jump"):
 			if Input.is_action_pressed("key_down"):
 				var ground = ground_scanner.get_collider(0)
-				ground.ground_jump()
-				down_jump_ended.connect(ground.revert_mask)
+				if ground.down_jumpable:
+					velocity.y += -130
+					ground.ground_jump()
+					down_jump_ended.connect(ground.revert_mask)
 			else:
 				velocity.y += JUMP_VELOCITY
 				

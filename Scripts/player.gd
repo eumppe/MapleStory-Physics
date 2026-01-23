@@ -10,7 +10,7 @@ const MOVE_ACCEL = 1600
 const JUMP_VELOCITY = -700.0
 const GRAVITY = 2100
 
-const GROUND_FRICTION : float = 0.9
+const GROUND_FRICTION : float = 0.95
 const AIR_FRICTION : float = 0.05
 
 @onready var ground_scanner: ShapeCast2D = $GroundScanner

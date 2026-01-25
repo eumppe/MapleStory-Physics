@@ -24,7 +24,7 @@ func _deferred_switch_scene(res_path, spawn_index):
 			player.position = portal.position
 			for node in player.get_children():
 				if is_instance_of(node,Camera2D):
-					node.offset = Vector2.UP * 80
+					#node.offset = Vector2.UP * 80
 					node.reset_smoothing()
 					break
 			break

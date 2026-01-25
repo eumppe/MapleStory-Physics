@@ -1,16 +1,14 @@
-[gd_scene load_steps=7 format=3 uid="uid://bvqef1dfwegyq"]
+[gd_scene load_steps=5 format=3 uid="uid://bvqef1dfwegyq"]
 
-[ext_resource type="PackedScene" uid="uid://d4itgiv7b081u" path="res://Scenes/player.tscn" id="1_06vl5"]
 [ext_resource type="PackedScene" uid="uid://coglbt6idslky" path="res://Scenes/ground.tscn" id="2_c3gko"]
 [ext_resource type="PackedScene" uid="uid://b2ubs8h746fqj" path="res://Scenes/portal.tscn" id="3_50rrl"]
-[ext_resource type="PackedScene" uid="uid://cswye0dj4gumt" path="res://Scenes/test_scene3.tscn" id="4_50rrl"]
-[ext_resource type="PackedScene" uid="uid://celk5pppwu2dg" path="res://Scenes/test_scene1.tscn" id="4_c3gko"]
+[ext_resource type="PackedScene" uid="uid://d4itgiv7b081u" path="res://Scenes/player.tscn" id="4_c3gko"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_r5l72"]
 
 [node name="TestScene" type="Node2D"]
 
-[node name="Player" parent="." groups=["player"] instance=ExtResource("1_06vl5")]
+[node name="Player" parent="." groups=["player"] instance=ExtResource("4_c3gko")]
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 limit_enabled = false
@@ -46,15 +44,15 @@ rotation = -1.5707964
 shape = SubResource("WorldBoundaryShape2D_r5l72")
 
 [node name="Portal" parent="." groups=["portals"] instance=ExtResource("3_50rrl")]
-position = Vector2(-581, 74)
+position = Vector2(-580, 74)
 spwan_index = 2
-next_map = ExtResource("4_50rrl")
+next_map = "res://Scenes/test_scene3.tscn"
 next_spwan_index = 1
 
 [node name="Portal2" parent="." groups=["portals"] instance=ExtResource("3_50rrl")]
 position = Vector2(308, -220)
 spwan_index = 1
-next_map = ExtResource("4_c3gko")
+next_map = "res://Scenes/test_scene1.tscn"
 next_spwan_index = 1
 
 [node name="Label" type="Label" parent="."]

@@ -2,7 +2,7 @@ extends Node2D
 class_name Portal
 
 @export var spwan_index: int = 0
-@export var next_map: PackedScene
+@export var next_map: String
 @export var next_spwan_index: int
 
 
@@ -17,4 +17,4 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 func _take_portal():
 	print("take_portal")
 	print(next_map)
-	SceneSwitcher.switch_scene(next_map.get_path(), next_spwan_index)
+	SceneSwitcher.switch_scene(next_map, next_spwan_index)

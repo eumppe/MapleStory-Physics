@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://d4itgiv7b081u"]
 
 [ext_resource type="Script" uid="uid://cd6hhy3dvk72x" path="res://Scripts/player.gd" id="1_cvnsp"]
-[ext_resource type="Texture2D" uid="uid://g2axgoklwhv6" path="res://rect2.png" id="1_v0iea"]
+[ext_resource type="Texture2D" uid="uid://g2axgoklwhv6" path="res://Sprites/rect2.png" id="1_v0iea"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ia1lp"]
 animations = [{
@@ -15,13 +15,15 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
-size = Vector2(46, 87)
+size = Vector2(14, 86.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6t5aa"]
-size = Vector2(19.91, 0.1)
+size = Vector2(6.055, 0.1)
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
+collision_mask = 5
+floor_stop_on_slope = false
 script = ExtResource("1_cvnsp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -33,7 +35,7 @@ sprite_frames = SubResource("SpriteFrames_ia1lp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
-position = Vector2(0, 1.5)
+position = Vector2(0, 1.75)
 shape = SubResource("RectangleShape2D_cvnsp")
 
 [node name="GroundScanner" type="ShapeCast2D" parent="."]

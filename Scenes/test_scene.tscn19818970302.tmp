@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://celk5pppwu2dg"]
+[gd_scene load_steps=6 format=3 uid="uid://celk5pppwu2dg"]
 
 [ext_resource type="PackedScene" uid="uid://d4itgiv7b081u" path="res://Scenes/player.tscn" id="1_3dogw"]
 [ext_resource type="PackedScene" uid="uid://coglbt6idslky" path="res://Scenes/ground.tscn" id="2_r5l72"]
+[ext_resource type="PackedScene" uid="uid://b2ubs8h746fqj" path="res://Scenes/portal.tscn" id="3_50ct6"]
+[ext_resource type="PackedScene" uid="uid://bvqef1dfwegyq" path="res://Scenes/test_scene2.tscn" id="4_hb2xm"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_r5l72"]
 
@@ -41,3 +43,9 @@ shape = SubResource("WorldBoundaryShape2D_r5l72")
 position = Vector2(672, 40)
 rotation = -1.5707964
 shape = SubResource("WorldBoundaryShape2D_r5l72")
+
+[node name="Portal" parent="Node" groups=["portals"] instance=ExtResource("3_50ct6")]
+position = Vector2(524, 88)
+spwan_index = 1
+next_map = ExtResource("4_hb2xm")
+next_spwan_index = 1

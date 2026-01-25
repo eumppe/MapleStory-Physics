@@ -1,0 +1,63 @@
+[gd_scene load_steps=7 format=3 uid="uid://bvqef1dfwegyq"]
+
+[ext_resource type="PackedScene" uid="uid://d4itgiv7b081u" path="res://Scenes/player.tscn" id="1_06vl5"]
+[ext_resource type="PackedScene" uid="uid://coglbt6idslky" path="res://Scenes/ground.tscn" id="2_c3gko"]
+[ext_resource type="PackedScene" uid="uid://b2ubs8h746fqj" path="res://Scenes/portal.tscn" id="3_50rrl"]
+[ext_resource type="PackedScene" uid="uid://cswye0dj4gumt" path="res://Scenes/test_scene3.tscn" id="4_50rrl"]
+[ext_resource type="PackedScene" uid="uid://celk5pppwu2dg" path="res://Scenes/test_scene1.tscn" id="4_c3gko"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_r5l72"]
+
+[node name="TestScene" type="Node2D"]
+
+[node name="Player" parent="." groups=["player"] instance=ExtResource("1_06vl5")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+limit_enabled = false
+position_smoothing_enabled = true
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Ground4" parent="Node" instance=ExtResource("2_c3gko")]
+position = Vector2(-472, 28.000076)
+scale = Vector2(1, 0.16000137)
+
+[node name="Ground" parent="Node" instance=ExtResource("2_c3gko")]
+position = Vector2(308, -147)
+
+[node name="Ground2" parent="Node" instance=ExtResource("2_c3gko")]
+position = Vector2(0, 145.99998)
+scale = Vector2(-10.384, 0.359)
+down_jumpable = false
+
+[node name="Ground3" parent="Node" instance=ExtResource("2_c3gko")]
+position = Vector2(-188, 85.99999)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Node"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/StaticBody2D"]
+position = Vector2(-677, 47)
+rotation = 1.5707964
+shape = SubResource("WorldBoundaryShape2D_r5l72")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Node/StaticBody2D"]
+position = Vector2(672, 40)
+rotation = -1.5707964
+shape = SubResource("WorldBoundaryShape2D_r5l72")
+
+[node name="Portal" parent="." groups=["portals"] instance=ExtResource("3_50rrl")]
+position = Vector2(-581, 74)
+spwan_index = 2
+next_map = ExtResource("4_50rrl")
+next_spwan_index = 1
+
+[node name="Portal2" parent="." groups=["portals"] instance=ExtResource("3_50rrl")]
+position = Vector2(308, -220)
+spwan_index = 1
+next_map = ExtResource("4_c3gko")
+next_spwan_index = 1
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Map 2"

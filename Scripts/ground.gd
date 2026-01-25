@@ -1,4 +1,5 @@
 extends StaticBody2D
+class_name Ground
 
 @export var down_jumpable : bool = true
 

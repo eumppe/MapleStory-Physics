@@ -1,6 +1,8 @@
 extends CharacterBody2D
+class_name Player
 
 signal down_jump_ended
+signal up_pressed
 
 #TODO
 const SPEED = 300.0
@@ -61,6 +63,10 @@ var max_air_jump = 2
 var up_jump_count = 0
 var max_up_jump = 1
 func _physics_process(delta: float) -> void:
+	
+	if Input.is_action_just_pressed("key_up"):
+		up_pressed.emit()
+	
 	var direction := Input.get_axis("key_left", "key_right")
 	if direction:
 			face = direction
@@ -81,7 +87,7 @@ func _physics_process(delta: float) -> void:
 		# Handle jump.
 		if Input.is_action_pressed("jump"):
 			if Input.is_action_pressed("key_down"):
-				var ground = ground_scanner.get_collider(0)
+				var ground : Ground = ground_scanner.get_collider(0)
 				if ground.down_jumpable:
 					velocity.y += -130
 					ground.ground_jump()
@@ -97,6 +103,7 @@ func _physics_process(delta: float) -> void:
 		
 		if abs(velocity.x)>SPEED:
 			velocity.x -= clamp((velocity.x-FRICTION_POW*sign(velocity.x)) * get_friction(),-SPEED,SPEED)*delta*60
+		
 
 		# Get the input direction and handle the movement/deceleration.
 		# As good practice, you should replace UI actions with custom gameplay actions.

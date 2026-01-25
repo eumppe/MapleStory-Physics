@@ -1,0 +1,56 @@
+[gd_scene load_steps=6 format=3 uid="uid://celk5pppwu2dg"]
+
+[ext_resource type="PackedScene" uid="uid://d4itgiv7b081u" path="res://Scenes/player.tscn" id="1_o5f1p"]
+[ext_resource type="PackedScene" uid="uid://coglbt6idslky" path="res://Scenes/ground.tscn" id="2_tv7fe"]
+[ext_resource type="PackedScene" uid="uid://b2ubs8h746fqj" path="res://Scenes/portal.tscn" id="3_ci5h7"]
+[ext_resource type="PackedScene" uid="uid://bvqef1dfwegyq" path="res://Scenes/test_scene2.tscn" id="4_wippq"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_r5l72"]
+
+[node name="TestScene" type="Node2D"]
+
+[node name="Player" parent="." groups=["player"] instance=ExtResource("1_o5f1p")]
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+limit_enabled = false
+position_smoothing_enabled = true
+
+[node name="Node" type="Node" parent="."]
+
+[node name="Ground4" parent="Node" instance=ExtResource("2_tv7fe")]
+position = Vector2(-472, 28.000076)
+scale = Vector2(1, 0.16000137)
+
+[node name="Ground" parent="Node" instance=ExtResource("2_tv7fe")]
+position = Vector2(106, -50)
+
+[node name="Ground2" parent="Node" instance=ExtResource("2_tv7fe")]
+position = Vector2(0, 145.99998)
+scale = Vector2(-10.384, 0.359)
+down_jumpable = false
+
+[node name="Ground3" parent="Node" instance=ExtResource("2_tv7fe")]
+position = Vector2(-188, 85.99999)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Node"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Node/StaticBody2D"]
+position = Vector2(-677, 47)
+rotation = 1.5707964
+shape = SubResource("WorldBoundaryShape2D_r5l72")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Node/StaticBody2D"]
+position = Vector2(672, 40)
+rotation = -1.5707964
+shape = SubResource("WorldBoundaryShape2D_r5l72")
+
+[node name="Portal" parent="Node" groups=["portals"] instance=ExtResource("3_ci5h7")]
+position = Vector2(524, 76)
+spwan_index = 1
+next_map = ExtResource("4_wippq")
+next_spwan_index = 1
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Map 1"

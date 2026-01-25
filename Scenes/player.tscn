@@ -27,7 +27,7 @@ floor_stop_on_slope = false
 script = ExtResource("1_cvnsp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-modulate = Color(1, 0.44313726, 1, 1)
+modulate = Color(0, 0.83503026, 0.52614725, 1)
 z_index = 1
 position = Vector2(0, 1)
 scale = Vector2(0.46923077, 0.6769231)
@@ -45,3 +45,7 @@ scale = Vector2(2.31, 2.31)
 shape = SubResource("RectangleShape2D_6t5aa")
 target_position = Vector2(0, 0.43289948)
 max_results = 1
+
+[node name="invincible_body_timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="invincible_body_timer" to="." method="_on_invincible_body_timer_timeout"]

@@ -4,7 +4,6 @@ class_name Player
 signal down_jump_ended
 signal up_pressed
 
-#TODO
 const SPEED = 300.0
 const FRICTION_POW = 200.0
 const MOVE_ACCEL = 1600
@@ -56,6 +55,26 @@ func end_down_jump():
 	down_jump_ended.emit()
 	for dict in down_jump_ended.get_connections():
 		down_jump_ended.disconnect(dict.callable)
+		
+
+var hp: int = 100 # TODO: Get, Set
+var body_invincible : bool = false
+		
+signal invincible_timeout(player: Player)
+@onready var invincible_body_timer: Timer = $invincible_body_timer
+func _on_invincible_body_timer_timeout() -> void:
+	body_invincible= false # Replace with function body.
+	invincible_timeout.emit(self)
+
+func get_body_damage(damage: int):
+	if body_invincible:
+		return
+	hp -= damage
+	print(hp)
+	invincible_body_timer.start()
+
+func get_attack_damage(damage: int):
+	pass
 
 var face = 1
 var air_jump_count = 0

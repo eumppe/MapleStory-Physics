@@ -15,6 +15,4 @@ func _on_area_2d_body_exited(body: Node2D) -> void:
 		body.up_pressed.disconnect(_take_portal)
 
 func _take_portal():
-	print("take_portal")
-	print(next_map)
 	SceneSwitcher.switch_scene(next_map, next_spwan_index)
